@@ -34,6 +34,7 @@ export class MatchEntity {
 
     public static createFromDto(dto: MatchDto): MatchEntity {
         const entity = new MatchEntity();
+        entity.id = dto.id;
         entity.homeTeam = dto.homeTeam;
         entity.guestTeam = dto.guestTeam;
         entity.homeTeamGoals = dto.homeTeamGoals;

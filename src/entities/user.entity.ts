@@ -1,0 +1,43 @@
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+
+
+
+import { UserDto } from 'dto/user.dto';
+import { GroupEntity } from './group.entity';
+
+@Entity()
+export class UserEntity {
+
+    @PrimaryGeneratedColumn('uuid')
+    //@OneToMany (friends)
+    public id: string;
+
+    @Column()
+    public password: string;
+
+    @Column() 
+    public email: string;
+
+    @Column() 
+    public name: string;
+
+    @ManyToOne(type => UserEntity, user => user.id)
+    friends: UserEntity[]
+
+   @ManyToMany(type => GroupEntity, group => group.users)
+   @JoinTable()
+   groups: GroupEntity[]; 
+
+  
+
+    public static createFromDto(dto: UserDto): UserEntity {
+        const entity = new UserEntity();
+        entity.id = dto.id;
+        entity.password = dto.password;
+        entity.email = dto.email;
+        entity.name = dto.name;
+        
+
+        return entity;
+    }
+}

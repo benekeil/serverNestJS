@@ -4,6 +4,8 @@ import { TEAM } from './team.enum';
 
 export class MatchDto {
 
+    public id: string;
+    
     @IsNotEmpty()
     @IsEnum(TEAM)
     public homeTeam: TEAM;
@@ -24,6 +26,7 @@ export class MatchDto {
 
     public static createFromEntity(matchEntity: MatchEntity): MatchDto {
         const match = new MatchDto();
+        match.id = matchEntity.id;
         match.homeTeam = matchEntity.homeTeam;
         match.guestTeam = matchEntity.guestTeam;
         match.homeTeamGoals = matchEntity.homeTeamGoals;

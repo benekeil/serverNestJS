@@ -4,12 +4,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MatchEntity } from './entities/match.entity';
 import { Repository } from 'typeorm';
 import { MatchNotFoundException } from './exceptions/match.notfound.exception';
+import { ListEntity } from 'entities/list.entity';
 
 @Injectable()
 export class MatchService {
 
   constructor(
     @InjectRepository(MatchEntity) private readonly matchRepository: Repository<MatchEntity>,
+    @InjectRepository(ListEntity) private readonly listRepository: Repository<ListEntity>
   ) { }
 
   public async getAllMatches(): Promise<MatchDto[]> {
@@ -62,6 +64,32 @@ export class MatchService {
     return MatchDto.createFromEntity(finishedMatch);
   }
 
+  public async goalHomeTeam(matchId: string): Promise<MatchDto> {
+    const matchResultUpdate = await this.matchRepository.findOne(matchId);
+
+    if (!matchResultUpdate) {
+      throw new MatchNotFoundException();
+    }
+
+    matchResultUpdate.homeTeamGoals += 1;
+    const finishedMatch = await this.matchRepository.save(matchResultUpdate);
+
+    return MatchDto.createFromEntity(finishedMatch);
+  }
+
+  public async goalGuestTeam(matchId: string): Promise<MatchDto> {
+    const matchResultUpdate = await this.matchRepository.findOne(matchId);
+
+    if (!matchResultUpdate) {
+      throw new MatchNotFoundException();
+    }
+
+    matchResultUpdate.guestTeamGoals += 1;
+    const finishedMatch = await this.matchRepository.save(matchResultUpdate);
+
+    return MatchDto.createFromEntity(finishedMatch);
+  }
+
   public async deleteMatch(matchId: string): Promise<void> {
     const matchToBeDeleted = await this.matchRepository.findOne(matchId);
 
@@ -70,5 +98,15 @@ export class MatchService {
     }
 
     await this.matchRepository.delete(matchId);
+  }
+
+  public async deleteAllMatches(): Promise<void> {
+    //const matchToBeDeleted = await this.matchRepository.findOne(matchId);
+
+   // if (!matchToBeDeleted) {
+   //   throw new MatchNotFoundException();
+   // }
+
+    await this.matchRepository.clear();
   }
 }

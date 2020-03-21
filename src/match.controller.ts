@@ -6,6 +6,7 @@ import { ParseUUIDPipe } from '@nestjs/common';
 
 @Controller('/api')
 @UsePipes(ValidationPipe)
+
 @UseFilters(MatchErrorFilter)
 export class MatchController {
   constructor(private readonly matchService: MatchService) {}
@@ -49,4 +50,27 @@ export class MatchController {
   ): Promise<void> {
     await this.matchService.deleteMatch(matchId);
   }
+
+  @Delete('/allmatches')
+  @HttpCode(204)
+  public async deleteAllMatches(): Promise<void> {
+    await this.matchService.deleteAllMatches();
+  }
+
+  @Patch('/match/:id/goalHomeTeam')
+  public async goalHomeTeam(
+    @Param('id', ParseUUIDPipe) matchId: string,
+    
+  ): Promise<MatchDto> {
+    return this.matchService.goalHomeTeam(matchId);
+  }
+
+  @Patch('/match/:id/goalGuestTeam')
+  public async goalGuestTeam(
+    @Param('id', ParseUUIDPipe) matchId: string,
+    
+  ): Promise<MatchDto> {
+    return this.matchService.goalGuestTeam(matchId);
+  }
+
 }
