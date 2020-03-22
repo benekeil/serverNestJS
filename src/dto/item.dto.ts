@@ -25,6 +25,8 @@ export class ItemDto {
     @IsNotEmpty()
     public description: string;
 
+    
+
    
 
     public static createFromEntity(itemEntity: ItemEntity): ItemDto {

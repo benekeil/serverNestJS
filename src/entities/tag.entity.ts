@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { GroupDto } from '../dto/group.dto';
 import { ItemEntity } from './item.entity';
 
@@ -14,6 +14,12 @@ export class TagEntity {
 
     @Column()
     public name: string;
+
+    @CreateDateColumn()
+    public created: Date;
+
+    @UpdateDateColumn()
+    public updated: Date;
 
     
 

@@ -10,7 +10,7 @@ export class ListDto {
     public public: boolean;
 
 
-    public created: string;
+    
 
     @IsNotEmpty()
     public name: string;
@@ -21,7 +21,7 @@ export class ListDto {
         const list = new ListDto();
         list.id = listEntity.id;
         list.public = listEntity.public;
-        list.created = listEntity.created;
+        
         list.name = listEntity.name;
       
         return list;

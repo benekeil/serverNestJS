@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 import { ListDto } from 'dto/list.dto';
 import { UserDto } from 'dto/user.dto';
@@ -15,8 +15,11 @@ export class ListEntity {
     @Column()
     public public: boolean;
 
-    @Column()
-    public created: string;
+    @CreateDateColumn()
+    public created: Date;
+
+    @UpdateDateColumn()
+    public updated: Date;
 
     @Column()
     public name: string;
@@ -35,7 +38,6 @@ export class ListEntity {
         const entity = new ListEntity();
         entity.id = dto.id;
         entity.public = dto.public;
-        entity.created = dto.created;
         entity.name = dto.name;
         return entity;
     }

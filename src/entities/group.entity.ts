@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { GroupDto } from '../dto/group.dto';
 import { UserEntity } from './user.entity';
 import { ListEntity } from './list.entity';
@@ -15,6 +15,12 @@ export class GroupEntity {
 
     @Column()
     public name: string;
+
+    @CreateDateColumn()
+    public created: Date;
+
+    @UpdateDateColumn()
+    public updated: Date;
 
     
 

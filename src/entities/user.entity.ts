@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 
 
@@ -20,6 +20,12 @@ export class UserEntity {
 
     @Column() 
     public name: string;
+
+    @CreateDateColumn()
+    public created: Date;
+
+    @UpdateDateColumn()
+    public updated: Date;
 
     @ManyToOne(type => UserEntity, user => user.id)
     friends: UserEntity[]
